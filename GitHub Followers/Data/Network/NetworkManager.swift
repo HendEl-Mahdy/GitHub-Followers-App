@@ -13,10 +13,10 @@ final class NetworkManager {
     
     private init (){}
     
-    func fetchFollowers(username: String) -> Observable<Result<[Follower], GHFError>> {
+    func fetchFollowers(username: String, page: Int) -> Observable<Result<[Follower], GHFError>> {
         
         return Observable.create { observer in
-            let stringUrl = "https://api.github.com/users/\(username)/followers"
+            let stringUrl = "https://api.github.com/users/\(username)/followers?per_page=100&page=\(page)"
             
             guard let url = URL(string: stringUrl) else {
                 observer.onNext(.failure(.invalidURL))

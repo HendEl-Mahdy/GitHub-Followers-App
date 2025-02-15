@@ -31,6 +31,7 @@ class UserSearchViewController: UIViewController {
         configureUsernameTextField()
         configureFollowersButton()
         configureKeyboardBehavior()
+        setupBinding()
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -75,20 +76,22 @@ class UserSearchViewController: UIViewController {
         }
     }
     
-    @objc private func followersButtonAction(){
-        view.endEditing(true)
-        viewModel.getUserInfo(username: usernameTextField.text!)
-        viewModel.userInfoDriver.drive { [weak self] result in
+    private func setupBinding(){
+        viewModel.userInfoDriver.drive(onNext: { [weak self] result in
             switch result {
             case .success(let username):
                 let followersListVC = FollowersListViewController()
                 followersListVC.username = username
                 self?.navigationController?.pushViewController(followersListVC, animated: true)
-                
             case .failure(let error):
                 let _ = GHFAlertView(tiltle: "Something went wrong", message: error.errorMessage, buttonTitle: "OK")
             }
-        }.disposed(by: disposeBag)
+        }).disposed(by: disposeBag)
+    }
+    
+    @objc private func followersButtonAction(){
+        view.endEditing(true)
+        viewModel.getUserInfo(username: usernameTextField.text!)
     }
     
     // MARK: - Keyboard Configuration

@@ -10,9 +10,10 @@ import Foundation
 struct AppConstants {
     
     // GHFErorr Message
-    static let invalidURLMessage = "Oops! We couldn't find this GitHub username. Please enter a valid username and try again ☺️."
-    static let serverErrorMessage = "Oops! We couldn't find this GitHub username. Please check your connection and try again ☺️."
-    static let invalidResponseMessage = "Oops! We couldn't find this GitHub username. Please verify it and try again ☺️."
+    static let invalidURLMessage = "Oops! We couldn't find this GitHub username. Please enter a valid username and try again☺️."
+    static let serverErrorMessage = "Oops! We couldn't find this GitHub username. Please check your connection and try again☺️."
+    static let invalidResponseMessage = "Oops! We couldn't find this GitHub username. Please verify it and try again☺️."
+    static let noFollowersMessage = "Oops! This user currently has no followers. Feel free to be their first!😊."
     
     // GitHubUserSearchVC
     

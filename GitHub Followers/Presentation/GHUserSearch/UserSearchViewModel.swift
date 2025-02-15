@@ -22,7 +22,7 @@ class UserSearchViewModel: UserSearchProtocol {
     private let disposeBag = DisposeBag()
     
     var userInfoDriver: Driver<Result<String, GHFError>> {
-        return userInfoSubject.asDriver(onErrorJustReturn: .failure(.invalidResponse))
+        return userInfoSubject.asDriver(onErrorJustReturn: .failure(.invalidURL))
     }
     
     func getUserInfo(username: String) {

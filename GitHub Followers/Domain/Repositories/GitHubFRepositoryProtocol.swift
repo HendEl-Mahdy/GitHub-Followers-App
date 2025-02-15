@@ -10,6 +10,6 @@ import RxSwift
 
 
 protocol GitHubFRepositoryProtocol {
-    func getFollowers(username: String) -> Observable<Result<[Follower], GHFError>>
+    func getFollowers(username: String, page: Int) -> Observable<Result<[Follower], GHFError>>
     func getUserInfo(username: String) -> Observable<Result<User, GHFError>>
 }
