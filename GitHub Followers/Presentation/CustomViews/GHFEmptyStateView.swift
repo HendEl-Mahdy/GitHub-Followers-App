@@ -13,7 +13,7 @@ class GHFEmptyStateView: UIView {
         let label = UILabel()
         label.numberOfLines = 0
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 20)
+        label.font = UIFont.boldSystemFont(ofSize: 26)
         label.textColor = .secondaryLabel
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -48,9 +48,8 @@ class GHFEmptyStateView: UIView {
         addSubview(emptyStateImageView)
         
         messageLabel.snp.makeConstraints { make in
-            make.top.equalTo(150)
+            make.top.equalToSuperview().inset(200)
             make.leading.trailing.equalToSuperview().inset(50)
-            make.height.equalToSuperview().multipliedBy(0.3)
         }
         
         emptyStateImageView.snp.makeConstraints { make in

@@ -30,5 +30,4 @@ extension UIImageView {
         }
         task.resume()
     }
-    
 }

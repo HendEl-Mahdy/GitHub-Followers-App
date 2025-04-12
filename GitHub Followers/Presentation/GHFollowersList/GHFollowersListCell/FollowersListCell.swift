@@ -22,7 +22,7 @@ class FollowersListCell: UICollectionViewCell {
     private lazy var usernameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 16)
+        label.font = UIFont.boldSystemFont(ofSize: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -52,7 +52,7 @@ class FollowersListCell: UICollectionViewCell {
         }
         
         usernameLabel.snp.makeConstraints { make in
-            make.top.equalTo(avatarImageView.snp.bottom).offset(12)
+            make.top.equalTo(avatarImageView.snp.bottom).offset(14)
             make.leading.trailing.equalToSuperview().inset(8)
             make.height.equalTo(20)
         }

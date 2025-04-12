@@ -12,6 +12,7 @@ enum GHFError: String, Error {
     case serverError
     case invalidResponse
     case noFollowes
+    case failedToLoadProfile
     
     var errorMessage: String {
         switch self {
@@ -23,6 +24,8 @@ enum GHFError: String, Error {
             return AppConstants.invalidResponseMessage
         case .noFollowes:
             return AppConstants.noFollowersMessage
+        case .failedToLoadProfile:
+            return AppConstants.failedToLoadProfileMessage
         }
     }
 }
