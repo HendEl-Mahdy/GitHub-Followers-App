@@ -154,8 +154,8 @@ extension FollowersListViewController: UICollectionViewDelegate, UICollectionVie
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
-        let height = scrollView.frame.size.height
-        viewModel.shouldLoadMoreFollowers(username: username!, offsetY: offsetY, contentHeight: contentHeight, height: height)
+        let frameHeight = scrollView.frame.size.height
+        viewModel.shouldLoadMoreFollowers(username: username!, offsetY: offsetY, contentHeight: contentHeight, frameHeight: frameHeight)
     }
     
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {

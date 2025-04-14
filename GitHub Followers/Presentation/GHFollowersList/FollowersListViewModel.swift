@@ -15,7 +15,7 @@ protocol FollowersListProtocol {
     var showLoaderDriver: Driver<Bool> {get}
     func getFollowers(username: String)
     func getFilteredFollowers(searchKeyword: String)
-    func shouldLoadMoreFollowers(username: String, offsetY: CGFloat, contentHeight: CGFloat, height: CGFloat)
+    func shouldLoadMoreFollowers(username: String, offsetY: CGFloat, contentHeight: CGFloat, frameHeight: CGFloat)
 }
 
 class FollowersListViewModel: FollowersListProtocol {
@@ -51,7 +51,7 @@ class FollowersListViewModel: FollowersListProtocol {
                 case .success(let followers):
                     if followers.count == 0 {
                         self.followersSubject.onNext(.failure(.noFollowes))
-                    }else if followers.count < 100 {
+                    }else if followers.count < 30 {
                         self.followers.append(contentsOf: followers)
                         self.hasMoreFollower = false
                         self.followersSubject.onNext(.success(self.followers))
@@ -77,8 +77,8 @@ class FollowersListViewModel: FollowersListProtocol {
         }
     }
     
-    func shouldLoadMoreFollowers(username: String, offsetY: CGFloat, contentHeight: CGFloat, height: CGFloat) {
-        if offsetY > contentHeight - height, hasMoreFollower {
+    func shouldLoadMoreFollowers(username: String, offsetY: CGFloat, contentHeight: CGFloat, frameHeight: CGFloat) {
+        if offsetY > contentHeight - frameHeight * 1.2, hasMoreFollower {
             getFollowers(username: username)
         }
     }
