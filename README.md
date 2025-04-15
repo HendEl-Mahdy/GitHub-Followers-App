@@ -1,6 +1,29 @@
 # GitHub Followers App
 An iOS app to search for GitHub users, view their followers and see their GitHub profiles.
 
+## Screenshots
+- Light Mode
+<p align="center">
+  <img src="ScreenShots/Light_LunchScreen.png" alt="Light Mode 1" width="190" height="400"/>
+  <img src="ScreenShots/Light_HomeScreen.png" alt="Light Mode 2" width="190" height = "400"/>
+  <img src="ScreenShots/Light_Alert.png" alt="Light Mode 2" width="190" height = "400"/>
+  <img src="ScreenShots/Light_NoFollowers.png" alt="Light Mode 2" width="190" height = "400"/>
+  <img src="ScreenShots/Light_Followers.png" alt="Light Mode 2" width="190" height = "400"/>
+  <img src="ScreenShots/Light_Search.png" alt="Light Mode 2" width="190" height = "400"/>
+  <img src="ScreenShots/Light_Profile.png" alt="Light Mode 2" width="190" height = "400"/>
+</p>
+
+- Dark Mode
+<p align="center">
+  <img src="ScreenShots/Dark_LunchScreen.png" alt="Dark Mode 1" width="190" height = "400"/>
+  <img src="ScreenShots/Dark_HomeScreen.png" alt="Dark Mode 2" width="190" height = "400"/>
+  <img src="ScreenShots/Dark_Alert.png" alt="Dark Mode 2" width="190" height = "400"/>
+  <img src="ScreenShots/Dark_NoFollowers.png" alt="Dark Mode 2" width="190" height = "400"/>
+  <img src="ScreenShots/Dark_Followers.png" alt="Dark Mode 2" width="190" height = "400"/>
+  <img src="ScreenShots/Dark_Search.png" alt="Dark Mode 2" width="190" height = "400"/>
+  <img src="ScreenShots/Dark_Profile.png" alt="Dark Mode 2" width="190" height = "400"/>
+</p>
+
 ## Features
 - Search for GitHub users by username.
 - View a list of a user's followers.
