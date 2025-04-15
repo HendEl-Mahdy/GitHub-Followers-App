@@ -34,7 +34,8 @@ An iOS app to search for GitHub users, view their followers and see their GitHub
 - Displays an empty state custom view when a user has no followers.
 - Supports both light and dark modes.
 - Image caching for followers' avatars.
-No login is needed – just search and explore! 
+No login is needed – just search and explore!
+
 ## Built with:
 - MVVM + Clean Architecture.
 - Protocol-Oriented Programming (POP).
@@ -43,5 +44,7 @@ No login is needed – just search and explore!
 - WKWebView.
 - URLSession (networking).
   
-
+## Dependencies
+- [SnapKit](https://github.com/SnapKit/SnapKit) - Auto Layout
+- [RxSwift](https://github.com/ReactiveX/RxSwift) - Reactive programming
 
