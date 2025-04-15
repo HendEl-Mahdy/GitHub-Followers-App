@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// A reusable custom button used across the app with consistent styling.
 class GHFButton: UIButton {
 
     override init(frame: CGRect) {
@@ -15,7 +16,7 @@ class GHFButton: UIButton {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(AppConstants.initialError)
     }
     
     init(backgroundColor: UIColor, buttonTitle: String) {
@@ -27,7 +28,7 @@ class GHFButton: UIButton {
     
     private func setupButtonView() {
         translatesAutoresizingMaskIntoConstraints = false
-        self.layer.cornerRadius = 10
+        self.layer.cornerRadius = AppConstants.ButtonCornerRadius
         self.titleLabel?.font = UIFont.preferredFont(forTextStyle: .headline)
     }
 }

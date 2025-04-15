@@ -20,7 +20,7 @@ protocol FollowersListProtocol {
 
 class FollowersListViewModel: FollowersListProtocol {
     
-    private var usecase: GitHubFUseCaseProtocol = GitHubFUseCase()
+    private var usecase: GHFUseCaseProtocol = GHFUseCase()
     private var followersSubject = PublishSubject<Result<[Follower], GHFError>>()
     private var filteredfollowersSubject = PublishSubject<[Follower]>()
     private var showLoaderSubject = PublishSubject<Bool>()

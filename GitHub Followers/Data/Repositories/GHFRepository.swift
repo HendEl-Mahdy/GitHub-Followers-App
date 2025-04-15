@@ -1,5 +1,5 @@
 //
-//  GitHubFRepository.swift
+//  GHFRepository.swift
 //  GitHub Followers
 //
 //  Created by Hend El Mahdy on 08/02/2025.
@@ -8,7 +8,7 @@
 import Foundation
 import RxSwift
 
-class GitHubFRepository: GitHubFRepositoryProtocol {
+class GHFRepository: GHFRepositoryProtocol {
     
     func getFollowers(username: String, page: Int) -> Observable<Result<[Follower], GHFError>> {
         return NetworkManager.shared.fetchFollowers(username: username, page: page)

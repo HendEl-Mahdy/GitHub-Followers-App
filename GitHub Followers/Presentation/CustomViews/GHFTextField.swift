@@ -7,6 +7,7 @@
 
 import UIKit
 
+/// A custom text field for entering a GitHub username.
 class GHFTextField: UITextField {
     
     override init(frame: CGRect) {
@@ -15,11 +16,11 @@ class GHFTextField: UITextField {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(AppConstants.initialError)
     }
     
     private func setupTextFieldView() {
-        placeholder = "Username"
+        placeholder = AppConstants.textFieldPlaceholder
         textAlignment = .center
         font = UIFont.preferredFont(forTextStyle: .title3)
         
@@ -28,8 +29,8 @@ class GHFTextField: UITextField {
         adjustsFontSizeToFitWidth = true
         returnKeyType = .go
         
-        layer.cornerRadius = 10
-        layer.borderWidth = 2
+        layer.cornerRadius = AppConstants.textFieldCornerRadius
+        layer.borderWidth = AppConstants.textFieldBorderWidth
         layer.borderColor = UIColor.systemGray3.cgColor
         backgroundColor = .tertiarySystemBackground
         tintColor = .label

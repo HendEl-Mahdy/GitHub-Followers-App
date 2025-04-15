@@ -7,13 +7,15 @@
 
 import UIKit
 
+/// A custom UIView used to display an empty state message and image.
+/// This view is shown when there is no data to display, such as when a user has no followers.
 class GHFEmptyStateView: UIView {
 
     private lazy var messageLabel: UILabel = {
         let label = UILabel()
-        label.numberOfLines = 0
+        label.numberOfLines = AppConstants.numberOfLines
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 26)
+        label.font = AppConstants.emptyStateMessageFont
         label.textColor = .secondaryLabel
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -21,7 +23,7 @@ class GHFEmptyStateView: UIView {
     
     private lazy var emptyStateImageView: UIImageView = {
         let imageView = UIImageView()
-        imageView.image = UIImage(named: "empty-state-logo")
+        imageView.image = AppConstants.emptyStateImageViewImage
         imageView.translatesAutoresizingMaskIntoConstraints = false
         return imageView
     }()
@@ -32,7 +34,7 @@ class GHFEmptyStateView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(AppConstants.initialError)
     }
     
     init(message: String) {
@@ -48,14 +50,14 @@ class GHFEmptyStateView: UIView {
         addSubview(emptyStateImageView)
         
         messageLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().inset(200)
-            make.leading.trailing.equalToSuperview().inset(50)
+            make.top.equalToSuperview().inset(AppConstants.emptyStateMessageTopSpacing)
+            make.leading.trailing.equalToSuperview().inset(AppConstants.emptyStateMessageHorizontalPadding)
         }
         
         emptyStateImageView.snp.makeConstraints { make in
-            make.width.equalToSuperview().multipliedBy(1.3)
-            make.height.equalTo(self.snp.width).multipliedBy(1.3)
-            make.leading.equalTo(100)
+            make.width.equalToSuperview().multipliedBy(AppConstants.emptyStateImageWidthMultiplier)
+            make.height.equalTo(self.snp.width).multipliedBy(AppConstants.emptyStateImageHightMultiplier)
+            make.leading.equalTo(AppConstants.emptyStateImageLeading)
             make.bottom.equalToSuperview()
         }
     }

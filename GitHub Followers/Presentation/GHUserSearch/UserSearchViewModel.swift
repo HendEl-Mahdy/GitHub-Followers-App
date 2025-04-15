@@ -17,7 +17,7 @@ protocol UserSearchProtocol {
 
 class UserSearchViewModel: UserSearchProtocol {
     
-    private let usecase: GitHubFUseCaseProtocol = GitHubFUseCase()
+    private let usecase: GHFUseCaseProtocol = GHFUseCase()
     private let userInfoSubject = PublishSubject<Result<String, GHFError>>()
     private let disposeBag = DisposeBag()
     

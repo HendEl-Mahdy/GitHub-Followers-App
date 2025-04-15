@@ -7,15 +7,16 @@
 
 import UIKit
 
+/// A custom alert view for displaying messages with a title, body, and dismiss button`GHFButton`.
 class GHFAlertView: UIView {
     
     private var closeButton: GHFButton?
-    
+    /// The container view that holds the alert's content (title, message, button).
     private lazy var containerView: UIView = {
         let container = UIView()
         container.backgroundColor = .systemBackground
-        container.layer.cornerRadius = 16
-        container.layer.borderWidth = 2
+        container.layer.cornerRadius = AppConstants.containerViewCornerRadius
+        container.layer.borderWidth = AppConstants.containerViewBorderWidth
         container.layer.borderColor = UIColor.white.cgColor
         container.clipsToBounds = true
         container.translatesAutoresizingMaskIntoConstraints = false
@@ -25,7 +26,7 @@ class GHFAlertView: UIView {
     private lazy var titleLabel: UILabel = {
         let titleLb = UILabel()
         titleLb.textAlignment = .center
-        titleLb.font = UIFont.boldSystemFont(ofSize: 20)
+        titleLb.font = UIFont.boldSystemFont(ofSize: AppConstants.alertTitleLabelFontSize)
         titleLb.textColor = .label
         titleLb.translatesAutoresizingMaskIntoConstraints = false
         return titleLb
@@ -34,7 +35,7 @@ class GHFAlertView: UIView {
     private lazy var messageLabel: UILabel = {
         let messageLb = UILabel()
         messageLb.textAlignment = .center
-        messageLb.numberOfLines = 0
+        messageLb.numberOfLines = AppConstants.numberOfLines
         messageLb.font = UIFont.preferredFont(forTextStyle: .body)
         messageLb.textColor = .secondaryLabel
         messageLb.translatesAutoresizingMaskIntoConstraints = false
@@ -50,18 +51,16 @@ class GHFAlertView: UIView {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
+        fatalError(AppConstants.initialError)
     }
     
     private func setupView(){
+        backgroundColor = AppConstants.alertBackgroundColor
         configureContainerView()
         configureTitleLabel()
         configureBodyLabel()
         configureCloseButton()
-        backgroundColor = UIColor.black.withAlphaComponent(0.5)
-        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let keyWindow = scene.windows.first else { return }
-        frame = keyWindow.bounds
-        keyWindow.addSubview(self)
+        moveViewToFront()
     }
     
     private func configureContainerView() {
@@ -69,7 +68,7 @@ class GHFAlertView: UIView {
         
         containerView.snp.makeConstraints { make in
             make.center.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(0.8)
+            make.width.equalToSuperview().multipliedBy(AppConstants.containerViewWidthMultiplier)
         }
     }
     
@@ -77,9 +76,9 @@ class GHFAlertView: UIView {
         containerView.addSubview(titleLabel)
         
         titleLabel.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(20)
-            make.leading.trailing.equalToSuperview().inset(10)
-            make.height.equalTo(26)
+            make.top.equalToSuperview().offset(AppConstants.alertTitleLabelTopSpacing)
+            make.leading.trailing.equalToSuperview().inset(AppConstants.alertTitleLabelHorizontalPadding)
+            make.height.equalTo(AppConstants.alertTitleLabelHeight)
         }
     }
     
@@ -87,8 +86,8 @@ class GHFAlertView: UIView {
         containerView.addSubview(messageLabel)
         
         messageLabel.snp.makeConstraints { make in
-            make.top.equalTo(titleLabel.snp.bottom).offset(18)
-            make.leading.trailing.equalToSuperview().inset(30)
+            make.top.equalTo(titleLabel.snp.bottom).offset(AppConstants.alertMessageLabelTopSpacing)
+            make.leading.trailing.equalToSuperview().inset(AppConstants.alertMessageLabelHorizontalPadding)
         }
     }
     
@@ -97,17 +96,23 @@ class GHFAlertView: UIView {
         closeButton?.addTarget(self, action: #selector(dismissAlertView), for: .touchUpInside)
         
         closeButton?.snp.makeConstraints { make in
-            make.top.equalTo(messageLabel.snp.bottom).offset(30)
-            make.leading.trailing.equalToSuperview().inset(40)
-            make.height.equalTo(45)
-            make.bottom.equalToSuperview().inset(20)
-            
+            make.top.equalTo(messageLabel.snp.bottom).offset(AppConstants.alertButtonTopSpacing)
+            make.leading.trailing.equalToSuperview().inset(AppConstants.alertButtonHorizontalPadding)
+            make.bottom.equalToSuperview().inset(AppConstants.alertButtonBottomSpacing)
+            make.height.equalTo(AppConstants.alertButtonHeight)
         }
     }
     
+    /// Adds the alert view to the application's key window and brings it to the front.
+    private func moveViewToFront() {
+        guard let scene = UIApplication.shared.connectedScenes.first as? UIWindowScene, let keyWindow = scene.windows.first else { return }
+        frame = keyWindow.bounds
+        keyWindow.addSubview(self)
+    }
+    
     @objc private func dismissAlertView(){
-        UIView.animate(withDuration: 0.3, animations: { [weak self] in
-            self?.alpha = 0
+        UIView.animate(withDuration: AppConstants.alertDismissDuration, animations: { [weak self] in
+            self?.alpha = AppConstants.alertDismissAlpha
         }) { [weak self] _ in
             self?.removeFromSuperview()
         }
