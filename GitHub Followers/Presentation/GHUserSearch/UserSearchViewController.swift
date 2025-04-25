@@ -9,21 +9,23 @@ import UIKit
 import SnapKit
 import RxSwift
 
+/// A view controller for searching GitHub users and navigating to their followers list.
 class UserSearchViewController: UIViewController {
     
     private let viewModel: UserSearchProtocol = UserSearchViewModel()
     private let disposeBag = DisposeBag()
     
     private lazy var usernameTextField = GHFTextField()
-    private lazy var followersButton = GHFButton(backgroundColor: .systemGreen, buttonTitle: "Get Followers")
+    private lazy var followersButton = GHFButton(backgroundColor: .systemGreen, buttonTitle: AppConstants.getFollowersButtonTitle)
     
     private lazy var logoImageView: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "gh-logo")
+        imageView.image = UIImage(named: AppConstants.logoImageName)
         return imageView
     }()
     
+    //MARK: - App LifeCycle
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .systemBackground
@@ -37,7 +39,7 @@ class UserSearchViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         navigationController?.setNavigationBarHidden(true, animated: true)
-        usernameTextField.text = ""
+        usernameTextField.text = AppConstants.emptyString
     }
     
     // MARK: - Views Configurations
@@ -45,10 +47,10 @@ class UserSearchViewController: UIViewController {
         view.addSubview(logoImageView)
         
         logoImageView.snp.makeConstraints { make in
-            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(90)
+            make.top.equalTo(view.safeAreaLayoutGuide.snp.top).offset(AppConstants.logoTopOffset)
             make.centerX.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(0.65)
-            make.height.equalToSuperview().multipliedBy(0.3)
+            make.width.equalToSuperview().multipliedBy(AppConstants.logoWidthMultiplier)
+            make.height.equalToSuperview().multipliedBy(AppConstants.logoHeightMultiplier)
         }
     }
     
@@ -57,10 +59,10 @@ class UserSearchViewController: UIViewController {
         usernameTextField.delegate = self
         
         usernameTextField.snp.makeConstraints { make in
-            make.top.equalTo(logoImageView.snp.bottom).offset(50)
+            make.top.equalTo(logoImageView.snp.bottom).offset(AppConstants.usernameTopOffset)
             make.centerX.equalToSuperview()
-            make.width.equalToSuperview().multipliedBy(0.65)
-            make.height.equalToSuperview().multipliedBy(0.06)
+            make.width.equalToSuperview().multipliedBy(AppConstants.usernameWidthMultiplier)
+            make.height.equalToSuperview().multipliedBy(AppConstants.usernameHeightMultiplier)
         }
     }
     
@@ -70,23 +72,28 @@ class UserSearchViewController: UIViewController {
         
         followersButton.snp.makeConstraints { make in
             make.centerX.equalToSuperview()
-            make.top.equalTo(usernameTextField.snp.bottom).offset(70)
-            make.width.equalToSuperview().multipliedBy(0.35)
-            make.height.equalToSuperview().multipliedBy(0.06)
+            make.top.equalTo(usernameTextField.snp.bottom).offset(AppConstants.followersButtonTopOffset)
+            make.width.equalToSuperview().multipliedBy(AppConstants.followersButtonWidthMultiplier)
+            make.height.equalToSuperview().multipliedBy(AppConstants.followersButtonHeightMultiplier)
         }
     }
     
     private func setupBinding(){
-        viewModel.userInfoDriver.drive(onNext: { [weak self] result in
-            switch result {
-            case .success(let username):
-                let followersListVC = FollowersListViewController()
-                followersListVC.username = username
-                self?.navigationController?.pushViewController(followersListVC, animated: true)
-            case .failure(let error):
-                let _ = GHFAlertView(tiltle: "Something went wrong", message: error.errorMessage, buttonTitle: "OK")
-            }
-        }).disposed(by: disposeBag)
+        viewModel.userInfoDriver.drive(
+            onNext: { [weak self] result in
+                switch result {
+                case .success(let username):
+                    let followersListVC = FollowersListViewController()
+                    followersListVC.username = username
+                    self?.navigationController?.pushViewController(followersListVC, animated: true)
+                case .failure(let error):
+                    let _ = GHFAlertView(
+                        tiltle: AppConstants.GHFAlertViewTitle,
+                        message: error.errorMessage,
+                        buttonTitle: AppConstants.GHFAlertViewButtonTitle
+                    )
+                }
+            }).disposed(by: disposeBag)
     }
     
     @objc private func followersButtonAction(){
@@ -95,29 +102,33 @@ class UserSearchViewController: UIViewController {
     }
     
     // MARK: - Keyboard Configuration
+    /// Configures keyboard behavior, including tap gestures and notifications.
     private func configureKeyboardBehavior(){
         setupDismissKeyBoardTapGesture()
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
+    /// Sets up a tap gesture to dismiss the keyboard.
     private func setupDismissKeyBoardTapGesture(){
         let tap = UITapGestureRecognizer(target: self.view, action: #selector(UIView.endEditing))
         view.addGestureRecognizer(tap)
     }
     
+    /// Animates the view upward when the keyboard appears.
+    /// - Parameter notification: The notification containing keyboard information.
     @objc private func keyboardWillShow(_ notification: Notification) {
         if let keyboardFrame = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? CGRect {
             let keyboardHeight = keyboardFrame.height
             
-            UIView.animate(withDuration: 0.3) {
-                self.view.transform = CGAffineTransform(translationX: 0, y: -keyboardHeight / 4)
+            UIView.animate(withDuration: AppConstants.keyboardAnimationDuration) {
+                self.view.transform = CGAffineTransform(translationX: CGFloat(AppConstants.zero), y: -keyboardHeight / AppConstants.keyboardHeightDivider)
             }
         }
     }
     
     @objc private func keyboardWillHide(_ notification: Notification) {
-        UIView.animate(withDuration: 0.3) {
+        UIView.animate(withDuration: AppConstants.keyboardAnimationDuration) {
             self.view.transform = .identity
         }
     }
@@ -128,7 +139,12 @@ class UserSearchViewController: UIViewController {
     
 }
 
+/// Extension to handle text field delegate methods.
 extension UserSearchViewController: UITextFieldDelegate {
+    
+    /// Handles the return key press by triggering the followers button action.
+    /// - Parameter textField: The text field that received the return key press.
+    /// - Returns: True to allow the return key action.
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         followersButtonAction()
         return true

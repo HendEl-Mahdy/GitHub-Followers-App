@@ -8,6 +8,7 @@
 import UIKit
 import RxSwift
 
+/// A view controller that displays a list of followers for a given GitHub username.
 class FollowersListViewController: UIViewController {
     
     var username: String?
@@ -45,12 +46,14 @@ class FollowersListViewController: UIViewController {
     private func setupCollectionView() {
         let layout = UICollectionViewFlowLayout()
         layout.scrollDirection = .vertical
-        layout.minimumLineSpacing = 14
-        layout.minimumInteritemSpacing = 4
-        layout.itemSize = CGSize(width: view.frame.width * 0.3, height: view.frame.height * 0.18)
-        
+        layout.minimumLineSpacing = AppConstants.collectionViewMinimumLineSpacing
+        layout.minimumInteritemSpacing = AppConstants.collectionViewMinimumInteritemSpacing
+        layout.itemSize = CGSize(
+            width: view.frame.width * AppConstants.collectViewItemWidthMultiplier,
+            height: view.frame.height * AppConstants.collectionViewItemHeightMultiplier
+        )
         collectionView = UICollectionView(frame: .zero, collectionViewLayout: layout)
-        collectionView?.contentInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+        collectionView?.contentInset = AppConstants.collectionViewContentInset
         collectionView?.register(FollowersListCell.self, forCellWithReuseIdentifier: FollowersListCell.identifier)
         collectionView?.delegate = self
         collectionView?.dataSource = self
@@ -64,7 +67,7 @@ class FollowersListViewController: UIViewController {
     
     private func setupSearchControllerView() {
         searchController.searchResultsUpdater = self
-        searchController.searchBar.placeholder = "Search for a follower"
+        searchController.searchBar.placeholder = AppConstants.searchBarPlaceholder
         searchController.hidesNavigationBarDuringPresentation = true
         searchController.searchBar.setShowsCancelButton(true, animated: true)
         navigationItem.searchController = searchController
@@ -114,17 +117,24 @@ class FollowersListViewController: UIViewController {
     }
     
     //MARK: - Keyboard Settings
+    /// Configures tap gesture to dismiss the keyboard when tapping on the collection view.
     private func configureKeyboardBehavior() {
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(dismissKeyboard))
         tapGesture.cancelsTouchesInView = false
         collectionView?.addGestureRecognizer(tapGesture)
     }
+    /// Dismisses the keyboard by resigning the search bar's first responder status.
     @objc private func dismissKeyboard() {
         searchController.searchBar.resignFirstResponder()
     }
 }
 
+
+/// Extension to handle collection view delegate, data source, and search results updating.
 extension FollowersListViewController: UICollectionViewDelegate, UICollectionViewDataSource, UISearchResultsUpdating {
+    
+    /// Updates search results based on the search bar input.
+    /// - Parameter searchController: The search controller containing the search bar.
     func updateSearchResults(for searchController: UISearchController) {
         guard let searchKeyword = searchController.searchBar.text else { return }
         viewModel.getFilteredFollowers(searchKeyword: searchKeyword)
@@ -151,6 +161,7 @@ extension FollowersListViewController: UICollectionViewDelegate, UICollectionVie
         searchController.isActive = false
     }
     
+    /// Triggers loading more followers when the user scrolls near the bottom.
     func scrollViewDidEndDragging(_ scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         let offsetY = scrollView.contentOffset.y
         let contentHeight = scrollView.contentSize.height
@@ -158,6 +169,8 @@ extension FollowersListViewController: UICollectionViewDelegate, UICollectionVie
         viewModel.shouldLoadMoreFollowers(username: username!, offsetY: offsetY, contentHeight: contentHeight, frameHeight: frameHeight)
     }
     
+    /// Dismisses the keyboard when scrolling begins.
+    /// - Parameter scrollView: The scroll view (collection view) that began dragging.
     func scrollViewWillBeginDragging(_ scrollView: UIScrollView) {
         searchController.searchBar.resignFirstResponder()
     }

@@ -7,13 +7,14 @@
 
 import UIKit
 
+/// A custom collection view cell used to display a follower's avatar and username.
 class FollowersListCell: UICollectionViewCell {
-    static let identifier = "followersCell"
+    static let identifier = AppConstants.followersCellIdentifier
     
     private lazy var avatarImageView: UIImageView = {
         let image = UIImageView()
-        image.image = UIImage(named: "avatar-placeholder")
-        image.layer.cornerRadius = 10
+        image.image = UIImage(named: AppConstants.followersCellImagePlaceholder)
+        image.layer.cornerRadius = AppConstants.followersCellImageCornerRadius
         image.clipsToBounds = true
         image.translatesAutoresizingMaskIntoConstraints = false
         return image
@@ -22,7 +23,7 @@ class FollowersListCell: UICollectionViewCell {
     private lazy var usernameLabel: UILabel = {
         let label = UILabel()
         label.textAlignment = .center
-        label.font = UIFont.boldSystemFont(ofSize: 18)
+        label.font = AppConstants.followersCellUsernameFont
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -33,12 +34,7 @@ class FollowersListCell: UICollectionViewCell {
     }
     
     required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setFollower(follower: Follower) {
-        usernameLabel.text = follower.login
-        avatarImageView.downloadImage(from: follower.avatarUrl)
+        fatalError(AppConstants.initialError)
     }
     
     private func configureCell(){
@@ -46,16 +42,22 @@ class FollowersListCell: UICollectionViewCell {
         addSubview(usernameLabel)
         
         avatarImageView.snp.makeConstraints { make in
-            make.top.equalToSuperview().offset(8)
-            make.leading.trailing.equalToSuperview().inset(12)
+            make.top.equalToSuperview().offset(AppConstants.followersCellAvatarTopOffset)
+            make.leading.trailing.equalToSuperview().inset(AppConstants.followersCellAvatarHorizontalInset)
             make.height.equalTo(avatarImageView.snp.width)
         }
         
         usernameLabel.snp.makeConstraints { make in
-            make.top.equalTo(avatarImageView.snp.bottom).offset(14)
-            make.leading.trailing.equalToSuperview().inset(8)
-            make.height.equalTo(20)
+            make.top.equalTo(avatarImageView.snp.bottom).offset(AppConstants.followersCellUsernameTopOffset)
+            make.leading.trailing.equalToSuperview().inset(AppConstants.followersCellUsernameHorizontalInset)
+            make.height.equalTo(AppConstants.followersCellUsernameHeight)
         }
     }
     
+    /// Configures the cell with data from a `Follower` object.
+    /// - Parameter follower: The follower object containing the username and avatar URL.
+    func setFollower(follower: Follower) {
+        usernameLabel.text = follower.login
+        avatarImageView.downloadImage(from: follower.avatarUrl)
+    }
 }

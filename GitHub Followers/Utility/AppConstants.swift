@@ -53,7 +53,48 @@ struct AppConstants {
     static let emptyStateImageLeading = 100
     
     //MARK: - GitHubUserSearchVC
+    static let getFollowersButtonTitle = "Get Followers"
+    static let logoImageName = "gh-logo"
+    static let emptyString = ""
+    static let logoTopOffset: CGFloat = 90
+    static let logoWidthMultiplier: CGFloat = 0.65
+    static let logoHeightMultiplier: CGFloat = 0.3
+    static let usernameTopOffset: CGFloat = 50
+    static let usernameWidthMultiplier: CGFloat = 0.65
+    static let usernameHeightMultiplier: CGFloat = 0.06
+    static let followersButtonTopOffset: CGFloat = 70
+    static let followersButtonWidthMultiplier: CGFloat = 0.35
+    static let followersButtonHeightMultiplier: CGFloat = 0.06
+    static let keyboardAnimationDuration: TimeInterval = 0.3
+    static let keyboardHeightDivider: CGFloat = 4
+    static let GHFAlertViewTitle = "Something went wrong"
+    static let GHFAlertViewButtonTitle = "OK"
     
+    //MARK: - FollowersListViewController
+    static let collectionViewMinimumLineSpacing: CGFloat = 14
+    static let collectionViewMinimumInteritemSpacing: CGFloat = 4
+    static let collectViewItemWidthMultiplier: CGFloat = 0.3
+    static let collectionViewItemHeightMultiplier: CGFloat = 0.18
+    static let collectionViewContentInset = UIEdgeInsets(top: 0, left: 8, bottom: 0, right: 8)
+    static let searchBarPlaceholder: String = "Search for a follower"
+    
+    //MARK: - FollowersListViewModel
+    static let pageNumber = 1
+    static let pageLimit = 30
+    static let addPage = 1
+    static let zero = 0
+    static let loadMoreThresholdMultiplier: CGFloat = 1.2
+    
+    //MARK: - FollowersListCell
+    static let followersCellIdentifier = "followersCell"
+    static let followersCellImagePlaceholder = "avatar-placeholder"
+    static let followersCellImageCornerRadius: CGFloat = 10
+    static let followersCellUsernameFont = UIFont.boldSystemFont(ofSize: 18)
+    static let followersCellAvatarTopOffset: CGFloat = 8
+    static let followersCellAvatarHorizontalInset: CGFloat = 12
+    static let followersCellUsernameTopOffset: CGFloat = 14
+    static let followersCellUsernameHorizontalInset: CGFloat = 8
+    static let followersCellUsernameHeight: CGFloat = 20
     
     //MARK: - UserInfoWebViewController
     static let backButtonTitle = "Back"
